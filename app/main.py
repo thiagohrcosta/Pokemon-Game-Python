@@ -102,9 +102,9 @@ enemy_pokemons = [
   },
 ]
 
-pokemon_choice = input(
+pokemon_choice = int(input(
   "You can choose your first pokemon by selecting:  1 - Pikachu | 2 - Bulbasaur | 3 - Charmander. Type the number of your choice: \n"
-)
+))
 
 selected_pokemon = ""
 
