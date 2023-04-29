@@ -9,6 +9,16 @@ This project was created using Docker to studying the basic concepts of Python l
 ## Summary
 **Day 03:** Learning how to deal with if/elsa statements
 
+## What player can do?
+
+**Player**: Can select one Pokemon to fight. There is three options to select, each one with their own strenght.  What actions the player can do?
+- Choose to attack, defend or use special power
+
+**Enemy:** The enemy will be selected using a random array of objects where exists three Pokemons. Their actions it's also, attack, defend or use special power.
+
+**Turn:** After each action the turn goes to the other part. After the selection the script runs some random values to calculate the chance of success for each action. After that the points of life is calculated. If someone gets less then 1 point of life the game is over.
+
+
 ## How to run this project
 This project was created with Docker, the Dockerfile is:
 
