@@ -52,7 +52,7 @@ print('''
 | |                                         
 |_| Game created to learn Python
       ''')
-print("********************************************************")
+print("************************************************************************************************************")
 
 user_name = input("What's your name hunter? \n")
 
@@ -115,17 +115,17 @@ elif pokemon_choice == 2:
 else:
   selected_pokemon = pokemons[2]
 
-print("************************************")
+print("************************************************************************************************************")
 print(f"Great! The pokemon selected was \n {selected_pokemon}")
-print("************************************")
+print("************************************************************************************************************")
 
 selected_pokemon_status = [{
   "pokemon": selected_pokemon["Name"],
   "status": {
-    "agility": selected_pokemon["agility"],
-    "strength": selected_pokemon["strength"],
-    "magic": selected_pokemon["magic"],
-    "life": selected_pokemon["life"]
+    "agility": int(selected_pokemon["agility"]),
+    "strength": int(selected_pokemon["strength"]),
+    "magic": int(selected_pokemon["magic"]),
+    "life": int(selected_pokemon["life"])
   }
 }]
 
@@ -135,14 +135,113 @@ random_enemy = random.choice(options)
 selected_enemy_pokemon = [{
   "pokemon": enemy_pokemons[random_enemy]["Name"],
   "status": {
-    "agility": enemy_pokemons[random_enemy]["agility"],
-    "strength": enemy_pokemons[random_enemy]["strength"],
-    "magic": enemy_pokemons[random_enemy]["magic"],
-    "life": enemy_pokemons[random_enemy]["life"]
+    "agility": int(enemy_pokemons[random_enemy]["agility"]),
+    "strength": int(enemy_pokemons[random_enemy]["strength"]),
+    "magic": int(enemy_pokemons[random_enemy]["magic"]),
+    "life": int(enemy_pokemons[random_enemy]["life"])
   }
 }]
 
-print("************************************")
-
 print(f"Your enemy will be: \n {selected_enemy_pokemon}")
-print("************************************")
+print("************************************************************************************************************")
+
+player_turn = True
+
+while selected_pokemon_status[0]["status"]["life"] > 0 and selected_enemy_pokemon[0]["status"]["life"] > 0:
+  if player_turn == True:
+    print("************************************************************************************************************")
+
+    print("It's your turn, what would you like to do?")
+    choice = int(input("1 - Attack | 2 - Defend | 3 - Use Special Power"))
+    
+    if choice == 1:
+      dice = random.randint(1, 10)
+      if dice > 5:
+        print("You hit the enemy!")
+        selected_enemy_pokemon[0]["status"]["life"] -= selected_pokemon_status[0]["status"]["strength"]
+        print(f"Enemy life: {selected_enemy_pokemon[0]['status']['life']}")
+        player_turn = False
+        print("************************************************************************************************************")
+
+      else:
+        print("You missed the enemy!")
+        print("************************************************************************************************************")
+        player_turn = False
+
+    elif choice == 2:
+      print("You are defending!")
+      print(f"Your life: {selected_pokemon_status[0]['status']['life']}")
+      player_turn = False
+      print("************************************************************************************************************")
+    elif choice == 3:
+      print("You are using your special power!")
+      dice = random.randint(1, 10)
+      if dice > 5:
+        print("You hit the enemy!")
+        selected_enemy_pokemon[0]["status"]["life"] -= selected_pokemon_status[0]["status"]["magic"]
+        print(f"Enemy life: {selected_enemy_pokemon[0]['status']['life']}")
+        player_turn = False
+        print("************************************************************************************************************")
+      else:
+        print("You missed the enemy!")
+        print(f"Your life: {selected_pokemon_status[0]['status']['life']}")
+        player_turn = False
+        print("************************************************************************************************************")
+    else:
+      print("Invalid choice. Please choose again.")
+      print("************************************************************************************************************")
+  else:
+    print("It's the enemy's turn!")
+    enemy_choice = int(random.choice(options))
+    if enemy_choice + 1 == 1:
+      print("The enemy is attacking!")
+      dice = random.randint(1, 10)
+      if dice > 5:
+        print("The enemy hit you!")
+        selected_pokemon_status[0]["status"]["life"] -= selected_enemy_pokemon[0]["status"]["strength"]
+        print(f"Your life: {selected_pokemon_status[0]['status']['life']}")
+        player_turn = True
+        print("************************************************************************************************************")
+      else:
+        print("The enemy missed you!")
+        player_turn = True
+        print("************************************************************************************************************")
+    elif enemy_choice + 1 == 2: 
+      print("The enemy is defending!")
+      print(f"Enemy life: {selected_enemy_pokemon[0]['status']['life']}")
+      player_turn = True
+      print("************************************************************************************************************")
+    else: 
+      print("The enemy is using his special power!")
+      dice = random.randint(1, 10)
+      if dice > 5:
+        print("The enemy hit you!")
+        selected_pokemon_status[0]["status"]["life"] -= selected_enemy_pokemon[0]["status"]["magic"]
+        print(f"Your life: {selected_pokemon_status[0]['status']['life']}")
+        player_turn = True
+        print("************************************************************************************************************")
+      else:
+        print("The enemy missed you!")
+        print(f"Enemy life: {selected_enemy_pokemon[0]['status']['life']}")
+        player_turn = True
+        print("************************************************************************************************************")
+      
+      
+if selected_pokemon_status[0]["status"]["life"] <= 0:
+  print(f"{user_name}, you lost the game!")
+
+elif selected_enemy_pokemon[0]["status"]["life"] <= 0:
+  print(''' 
+  
+              .-=========-.
+              \'-=======-'/
+              _|   .=.   |_
+             ((|  {{1}}  |))
+              \|   /|\   |/
+               \__ '`' __/
+                 _`) (`_
+          jgs  _/_______\_
+              /___________\
+
+  ''')
+  print(f"{user_name}, you won the game!")  
